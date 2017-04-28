@@ -1,0 +1,2 @@
+#INSERT INTO users (login, age, email) VALUES ('Dmitry', 20, 'yjdbrjdlvbnhbq@gmail.com');
+#"CREATE TABLE IF NOT EXISTS 'users'('id' INTEGER PRIMARY KEY AUTO_INCREMENT, 'login' VARCHAR(45), 'password' VARCHAR(45), 'age' DATE, 'email' VARCHAR(64));

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- https://logging.apache.org/log4j/2.x/manual/ -->
+<Configuration name="ConfigurationTest" monitorInterval="10">
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{1} - %msg%n"/>
+        </Console>
+        <RollingFile name="OkayRollingFileAppender"
+                     fileName="..\logs\MyProductProject\controllers.txt"
+                     filePattern="..\logs\MyProductProject\controllers-%d{yyyy-MM-dd-HH}-%i.txt">
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{HH:mm:ss} [%t] %-7level %logger{2} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="300MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+        <RollingFile name="ErrorRollingFileAppender"
+                     fileName="..\logs\MyProductProject\errors.txt"
+                     filePattern="..\logs\MyProductProject\errors-%d{yyyy-MM-dd-HH}-%i.txt">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-2level %logger{6} [%l] - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="30MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="100"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="web.product.filters.UserFilter" level="debug" additivity="true">
+            <AppenderRef ref="OkayRollingFileAppender"/>
+        </Logger>
+        <Logger name="web.product.controllers" level="trace" additivity="true">
+            <AppenderRef ref="OkayRollingFileAppender"/>
+        </Logger>
+
+        <Root level="all">
+            <AppenderRef ref="ConsoleAppender" level="trace"/>
+            <AppenderRef ref="ErrorRollingFileAppender" level="error"/>
+        </Root>
+    </Loggers>
+</Configuration>
